@@ -160,7 +160,7 @@ Getting Started
 
 Clone the repository:
 
-git clone https://github.com/RAbivarsan/Angular-Js-with-SQL-integration
+git clone (https://github.com/RAbivarsan/Angular-Js-with-SQL-integration-.git)
 
 
 Set up backend and frontend as described above
