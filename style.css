@@ -1,0 +1,9 @@
+body { margin:0; font-family:Arial,sans-serif; background:#f4f6f8; }
+.navbar { display:flex; justify-content:space-between; align-items:center; background:#2196F3; color:#fff; padding:10px 20px; }
+.nav-links { list-style:none; display:flex; gap:15px; margin:0; }
+.nav-links a { color:#fff; text-decoration:none; font-weight:bold; }
+.page { padding:20px; }
+.hidden { display:none; }
+.login-card { max-width:300px; margin:100px auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); text-align:center; }
+.login-card input { width:90%; padding:8px; margin:8px 0; border:1px solid #ccc; border-radius:4px; }
+.login-card button { width:95%; padding:10px; border:none; background:#2196F3; color:#fff; border-radius:4px; cursor:pointer; }

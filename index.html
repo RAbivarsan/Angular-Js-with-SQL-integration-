@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sales Management</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Login Page -->
+  <div id="login-page" class="page">
+    <div class="login-card">
+      <h2>Admin Login</h2>
+      <input type="text" id="username" placeholder="Username"><br>
+      <input type="password" id="password" placeholder="Password"><br>
+      <button onclick="login()">Login</button>
+      <p id="login-msg" style="color:red;"></p>
+    </div>
+  </div>
+
+  <!-- Navbar (hidden until login) -->
+  <nav id="navbar" class="navbar hidden">
+    <h2>Sales System</h2>
+    <ul class="nav-links">
+      <li><a href="#" onclick="showPage('dashboard')">Dashboard</a></li>
+      <li><a href="#" onclick="showPage('products')">Products</a></li>
+      <li><a href="#" onclick="showPage('customers')">Customers</a></li>
+      <li><a href="#" onclick="showPage('sales')">Sales</a></li>
+      <li><a href="#" onclick="showPage('reports')">Reports</a></li>
+      <li><a href="#" onclick="logout()">Logout</a></li>
+    </ul>
+  </nav>
+
+  <!-- Dashboard -->
+  <div id="dashboard" class="page hidden">
+    <h2>Dashboard</h2>
+    <p>Welcome, Admin!</p>
+  </div>
+
+  <!-- Products -->
+  <div id="products" class="page hidden">
+    <h2>Products</h2>
+    <p>Manage products here.</p>
+  </div>
+
+  <!-- Customers -->
+  <div id="customers" class="page hidden">
+    <h2>Customers</h2>
+    <p>Manage customers here.</p>
+  </div>
+
+  <!-- Sales -->
+  <div id="sales" class="page hidden">
+    <h2>Sales</h2>
+    <p>Record sales here.</p>
+  </div>
+
+  <!-- Reports -->
+  <div id="reports" class="page hidden">
+    <h2>Reports</h2>
+    <p>View sales reports here.</p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
