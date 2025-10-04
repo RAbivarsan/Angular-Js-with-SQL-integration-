@@ -1,0 +1,6 @@
+REQUREMENTS :
+
+npm install express
+
+npm install 
+npm start
