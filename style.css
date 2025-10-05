@@ -1,9 +1,153 @@
-body { margin:0; font-family:Arial,sans-serif; background:#f4f6f8; }
-.navbar { display:flex; justify-content:space-between; align-items:center; background:#2196F3; color:#fff; padding:10px 20px; }
-.nav-links { list-style:none; display:flex; gap:15px; margin:0; }
-.nav-links a { color:#fff; text-decoration:none; font-weight:bold; }
-.page { padding:20px; }
-.hidden { display:none; }
-.login-card { max-width:300px; margin:100px auto; background:#fff; padding:20px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1); text-align:center; }
-.login-card input { width:90%; padding:8px; margin:8px 0; border:1px solid #ccc; border-radius:4px; }
-.login-card button { width:95%; padding:10px; border:none; background:#2196F3; color:#fff; border-radius:4px; cursor:pointer; }
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e0eafc 100%);
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 950px;
+    margin: 40px auto;
+    background: #ffffffdd;
+    padding: 30px 50px;
+    box-shadow: 0 6px 24px rgba(60,90,120,0.11);
+    border-radius: 18px;
+}
+h1 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2a3d66;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+.tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 18px;
+}
+.tabs button {
+    background: #f1f3f4;
+    border: none;
+    border-radius: 14px 14px 0 0;
+    padding: 10px 30px;
+    margin: 0 5px;
+    font-weight: 600;
+    color: #3e5b91;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.18s, color 0.18s;
+}
+.tabs button.active, .tabs button:hover {
+    background: #3e5b91;
+    color: #fff;
+}
+.card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(60,90,120,0.08);
+    padding: 22px;
+    margin-bottom: 28px;
+}
+.colorful-form h2 {
+    color: #4a7cfa;
+    margin-bottom: 14px;
+}
+.colorful-form input, .colorful-form select {
+    padding: 9px 12px;
+    margin-bottom: 9px;
+    border: 1px solid #d2e3fa;
+    border-radius: 6px;
+    width: 100%;
+    font-size: 15px;
+    box-sizing: border-box;
+    outline: none;
+    transition: border 0.15s;
+}
+.colorful-form input:focus, .colorful-form select:focus {
+    border-color: #4a7cfa;
+}
+.form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+.colorful-form button {
+    padding: 8px 22px;
+    border: none;
+    border-radius: 6px;
+    background: linear-gradient(90deg, #4a7cfa 0%, #31c6ff 100%);
+    color: #fff;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px #4a7cfa22;
+    transition: background 0.18s;
+}
+.colorful-form button[type="button"] {
+    background: #8a98b3;
+}
+.colorful-form button:hover {
+    background: linear-gradient(90deg, #355fd7 0%, #1291e6 100%);
+}
+.colorful-form button[type="button"]:hover {
+    background: #5e6680;
+}
+.colorful-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    font-size: 15px;
+}
+.colorful-table th, .colorful-table td {
+    padding: 12px 10px;
+    border-bottom: 2px solid #f1f3f4;
+    text-align: left;
+}
+.colorful-table th {
+    background: linear-gradient(90deg, #4a7cfa22 0%, #31c6ff22 100%);
+    color: #355fd7;
+    font-weight: bold;
+}
+.colorful-table td {
+    background: #f8fbff;
+    color: #2a3d66;
+}
+.edit-btn {
+    background: #31c6ff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 6px 14px;
+    cursor: pointer;
+    margin-right: 6px;
+    transition: background 0.18s;
+}
+.edit-btn:hover {
+    background: #1291e6;
+}
+.del-btn {
+    background: #ff4e78;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 6px 14px;
+    cursor: pointer;
+    transition: background 0.18s;
+}
+.del-btn:hover {
+    background: #b81a46;
+}
+@media (max-width: 700px) {
+    .container {
+        padding: 12px;
+    }
+    .card {
+        padding: 10px;
+    }
+    .colorful-form input, .colorful-form select {
+        font-size: 13px;
+    }
+    .colorful-table th, .colorful-table td {
+        padding: 8px 4px;
+        font-size: 13px;
+    }
+}
