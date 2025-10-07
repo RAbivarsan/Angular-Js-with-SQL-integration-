@@ -11,12 +11,33 @@
     <div class="container">
         <h1>Store Sales & Product Management</h1>
         <div class="tabs">
-            <button ng-click="activeTab='sales'" ng-class="{'active':activeTab==='sales'}">Sales</button>
-            <button ng-click="activeTab='customers'" ng-class="{'active':activeTab==='customers'}">Customers</button>
-            <button ng-click="activeTab='products'" ng-class="{'active':activeTab==='products'}">Products</button>
+            <button ng-click="setTab('admin')" ng-class="{'active':activeTab==='admin'}">Admin Login</button>
+            <button ng-click="setTab('sales')" ng-class="{'active':activeTab==='sales'}" ng-if="isAdmin">Sales</button>
+            <button ng-click="setTab('customers')" ng-class="{'active':activeTab==='customers'}" ng-if="isAdmin">Customers</button>
+            <button ng-click="setTab('products')" ng-class="{'active':activeTab==='products'}" ng-if="isAdmin">Products</button>
+        </div>
+        <div style="margin:10px 0; font-size:14px; color:#555;">
+            Current tab: <strong>{{activeTab}}</strong> | Admin: <strong>{{isAdmin}}</strong>
+        </div>
+        <!-- Admin Login Tab -->
+        <div ng-show="activeTab==='admin'">
+            <div class="card login-form" ng-if="!isAdmin">
+                <h2>Admin Login</h2>
+                <form ng-submit="loginAdmin()">
+                    <input type="text" ng-model="adminLogin.username" placeholder="Username" required>
+                    <input type="password" ng-model="adminLogin.password" placeholder="Password" required>
+                    <button type="submit">Login</button>
+                </form>
+                <div class="error" ng-if="adminLoginError">{{adminLoginError}}</div>
+            </div>
+            <div class="card" ng-if="isAdmin">
+                <h2>Welcome, Admin!</h2>
+                <button ng-click="logoutAdmin()">Logout</button>
+                <p>You now have access to the full dashboard.</p>
+            </div>
         </div>
         <!-- Sales Tab -->
-        <div ng-show="activeTab==='sales'">
+        <div ng-show="activeTab==='sales' && isAdmin">
             <form ng-submit="saveSale()" class="card colorful-form">
                 <h2>{{ sale.id ? 'Edit Sale' : 'Add Sale' }}</h2>
                 <select ng-model="sale.product_id" required>
@@ -50,7 +71,7 @@
                         <tr ng-repeat="s in sales">
                             <td>{{s.product_name}} (₹{{s.product_price}})</td>
                             <td>{{s.quantity}}</td>
-                            <td>{{s.sale_date}}</td>
+                            <td>{{s.sale_date | date:'yyyy-MM-dd'}}</td>
                             <td>{{s.customer_name}}</td>
                             <td>
                                 <button class="edit-btn" ng-click="editSale(s)">Edit</button>
@@ -66,7 +87,7 @@
             </div>
         </div>
         <!-- Customers Tab -->
-        <div ng-show="activeTab==='customers'">
+        <div ng-show="activeTab==='customers' && isAdmin">
             <form ng-submit="saveCustomer()" class="card colorful-form">
                 <h2>{{ customer.id ? 'Edit Customer' : 'Add Customer' }}</h2>
                 <input type="text" ng-model="customer.name" placeholder="Customer Name" required>
@@ -98,7 +119,7 @@
             </div>
         </div>
         <!-- Products Tab -->
-        <div ng-show="activeTab==='products'">
+        <div ng-show="activeTab==='products' && isAdmin">
             <form ng-submit="saveProduct()" class="card colorful-form">
                 <h2>{{ product.id ? 'Edit Product' : 'Add Product' }}</h2>
                 <input type="text" ng-model="product.name" placeholder="Product Name" required>
@@ -133,7 +154,7 @@
     <script>
     angular.module('salesApp', [])
     .controller('SalesController', function($scope, $http) {
-        $scope.activeTab = 'sales';
+        $scope.activeTab = 'admin';
         $scope.sales = [];
         $scope.customers = [];
         $scope.products = [];
@@ -141,6 +162,47 @@
         $scope.customer = {};
         $scope.product = {};
         $scope.salesChart = null;
+
+        $scope.adminLogin = {};
+        $scope.adminLoginError = '';
+        $scope.isAdmin = false;
+
+        $scope.setTab = function(tab) {
+            $scope.activeTab = tab;
+        };
+
+        // Check admin session on load
+        $http.get('http://localhost:3000/api/admin/check', { withCredentials: true })
+            .then(function(res) {
+                $scope.isAdmin = res.data.loggedIn;
+                if ($scope.isAdmin) {
+                    loadSales();
+                    loadCustomers();
+                    loadProducts();
+                    $scope.activeTab = 'sales';
+                }
+            });
+
+        $scope.loginAdmin = function() {
+            $http.post('http://localhost:3000/api/admin/login', $scope.adminLogin, { withCredentials: true })
+                .then(function(res) {
+                    $scope.isAdmin = true;
+                    $scope.adminLoginError = '';
+                    loadSales();
+                    loadCustomers();
+                    loadProducts();
+                    $scope.activeTab = 'sales';
+                }, function(res) {
+                    $scope.adminLoginError = res.data.error || 'Login failed';
+                });
+        };
+        $scope.logoutAdmin = function() {
+            $http.post('http://localhost:3000/api/admin/logout', {}, { withCredentials: true })
+                .then(function() {
+                    $scope.isAdmin = false;
+                    $scope.activeTab = 'admin';
+                });
+        };
 
         function loadSales() {
             $http.get('http://localhost:3000/api/sales')
@@ -164,9 +226,6 @@
                     $scope.products = res.data;
                 });
         }
-        loadSales();
-        loadCustomers();
-        loadProducts();
 
         $scope.saveSale = function() {
             if ($scope.sale.id) {
@@ -184,6 +243,7 @@
             }
         };
         $scope.editSale = function(sale) {
+            sale.sale_date = sale.sale_date ? sale.sale_date.slice(0,10) : '';
             $scope.sale = angular.copy(sale);
         };
         $scope.deleteSale = function(id) {
