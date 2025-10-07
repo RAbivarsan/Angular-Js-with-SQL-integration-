@@ -2,15 +2,25 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const mysql = require('mysql2');
+const session = require('express-session');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: true,
+    credentials: true
+}));
 app.use(bodyParser.json());
+
+app.use(session({
+    secret: 'your-secret-key',
+    resave: false,
+    saveUninitialized: true
+}));
 
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '', // XAMPP default password
+    password: '',
     database: 'store_sales'
 });
 
@@ -20,6 +30,35 @@ db.connect(err => {
         process.exit(1);
     }
     console.log('Connected to MySQL');
+});
+
+// ADMIN login endpoints
+app.post('/api/admin/login', (req, res) => {
+    const { username, password } = req.body;
+    db.query(
+        'SELECT * FROM admins WHERE username=? AND password=?',
+        [username, password],
+        (err, results) => {
+            if (err) return res.status(500).json({ error: err });
+            if (results.length === 1) {
+                req.session.admin = { username };
+                res.json({ success: true });
+            } else {
+                res.status(401).json({ error: 'Invalid credentials' });
+            }
+        }
+    );
+});
+app.get('/api/admin/check', (req, res) => {
+    if (req.session && req.session.admin) {
+        res.json({ loggedIn: true, admin: req.session.admin });
+    } else {
+        res.json({ loggedIn: false });
+    }
+});
+app.post('/api/admin/logout', (req, res) => {
+    req.session.destroy();
+    res.json({ success: true });
 });
 
 // PRODUCTS endpoints
