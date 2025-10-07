@@ -136,6 +136,39 @@ h1 {
 .del-btn:hover {
     background: #b81a46;
 }
+/* Admin login styles */
+.login-form {
+    max-width: 400px;
+    margin: 40px auto;
+    padding: 30px;
+    background: #f6f8ff;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px #4a7cfa22;
+}
+.login-form h2 {
+    color: #4a7cfa;
+    margin-bottom: 20px;
+}
+.login-form input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 12px;
+    border: 1px solid #d2e3fa;
+    border-radius: 6px;
+}
+.login-form button {
+    width: 100%;
+    background: #4a7cfa;
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+}
+.login-form .error {
+    color: #dc3545;
+    margin-top: 12px;
+}
 @media (max-width: 700px) {
     .container {
         padding: 12px;
